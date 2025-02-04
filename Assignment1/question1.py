@@ -24,8 +24,6 @@ y_test_merged = pd.concat([y_test_sDAT, y_test_sNC], ignore_index=True, sort=Fal
 
 
 k_values_to_test = [1, 3, 5, 10, 20, 30, 40, 45, 50, 100, 150, 200]
-points = pd.read_csv("datasets/2D_grid_points.csv", header=None)
-
 for k_value in k_values_to_test:
     knn_model = KNeighborsClassifier(n_neighbors=k_value)
     knn_model.fit(x_train_merged, y_train_merged)
@@ -37,6 +35,7 @@ for k_value in k_values_to_test:
     plot_train_df = pd.DataFrame()
     plot_test_df = pd.DataFrame()
     plot_error_df = pd.DataFrame()
+    plot_boundary_df = pd.read_csv("datasets/2D_grid_points.csv", header=None)
     plot_train_df["x_train"] = x_train_merged[0]
     plot_train_df["y_train"] = x_train_merged[1]
     plot_test_df["x_test"] = x_test_merged[0]
@@ -45,7 +44,10 @@ for k_value in k_values_to_test:
     plot_test_df["predicted"] = np.where(y_pred == 1, "b", "g")
     plot_test_df["real_class_test"] = np.where(y_test_merged == 1, "b", "g")
     plot_error_df = plot_test_df[plot_test_df["predicted"] != plot_test_df["real_class_test"]]
-    plt.scatter(points[0], points[1], marker=".") # Too much data
+    area_predicted = knn_model.predict(plot_boundary_df)
+    plot_boundary_df["area"] = area_predicted
+    plot_boundary_df["area_color"] = np.where(area_predicted == 1, "b", "g")
+    plt.scatter(plot_boundary_df[0], plot_boundary_df[1], marker=".", color=plot_boundary_df["area_color"]) # Background grid
     plt.scatter("x_train", "y_train", data=plot_train_df, color=plot_train_df["class_train"], label="Train set", marker="o")
     plt.scatter("x_test", "y_test", data=plot_test_df, color=plot_test_df["real_class_test"], label="Test set", marker="+")
     plt.scatter("x_test", "y_test", data=plot_error_df, color="r", label="Error prediction")
