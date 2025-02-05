@@ -24,7 +24,7 @@ y_test = pd.concat([y_test_sDAT, y_test_sNC], ignore_index=True)
 
 # Select the best distance metric (Euclidean or Manhattan) from Question 1 & 2
 #best_metric = "euclidean"  # Change to "manhattan" if Manhattan performed better
-best_metric = "manhattan"
+best_metric = "euclidean"
 
 # Define k values for Model Capacity (1/k)
 k_values = np.arange(1, 101)  # Explore k from 1 to 100
@@ -51,7 +51,7 @@ plt.plot(model_capacity, test_errors, label="Test Error", marker="s")
 plt.xscale("log")  # Log scale for x-axis
 plt.xlabel("Model Capacity (1/k)")
 plt.ylabel("Error Rate")
-plt.title("Error Rate vs Model Capacity")
+plt.title("Error Rate vs Model Capacity (" + best_metric + ")")
 plt.legend()
 plt.grid()
 plt.show()
