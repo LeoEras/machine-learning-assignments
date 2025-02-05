@@ -27,8 +27,10 @@ knn_model = KNeighborsClassifier(n_neighbors=k_value, metric='manhattan')
 knn_model.fit(x_train_merged, y_train_merged)
 
 # Calculate the accuracy of the model.
-y_pred = knn_model.predict(x_test_merged)
-accuracy = accuracy_score(y_test_merged, y_pred)
+y_test_pred = knn_model.predict(x_test_merged)
+test_accuracy = accuracy_score(y_test_merged, y_test_pred)
+y_train_pred = knn_model.predict(x_train_merged)
+train_accuracy = accuracy_score(y_train_merged, y_train_pred)
 
 plot_train_df = pd.DataFrame()
 plot_test_df = pd.DataFrame()
@@ -39,7 +41,7 @@ plot_train_df["y_train"] = x_train_merged[1]
 plot_test_df["x_test"] = x_test_merged[0]
 plot_test_df["y_test"] = x_test_merged[1]
 plot_train_df["class_train"] = np.where(y_train_merged == 1, "b", "g")
-plot_test_df["predicted"] = np.where(y_pred == 1, "b", "g")
+plot_test_df["predicted"] = np.where(y_test_pred == 1, "b", "g")
 plot_test_df["real_class_test"] = np.where(y_test_merged == 1, "b", "g")
 plot_error_df = plot_test_df[plot_test_df["predicted"] != plot_test_df["real_class_test"]]
 area_predicted = knn_model.predict(plot_boundary_df)
@@ -51,6 +53,7 @@ plt.scatter("x_test", "y_test", data=plot_test_df, color=plot_test_df["real_clas
 plt.scatter("x_test", "y_test", data=plot_error_df, color="r", label="Error prediction")
 plt.xlabel("x1")
 plt.ylabel("x2")
-plt.title("Testing KNN with k = " + str(k_value) + ", Test Error: " + str(round((1 - accuracy)* 100)) + "%")
+plt.title("Testing KNN with k = " + str(k_value) + ", Test Error: " + str(round((1 - test_accuracy)* 100)) + "%"
+              + ", Train Error: " + str(round((1 - train_accuracy)* 100)) + "%")
 plt.legend()
 plt.show()
