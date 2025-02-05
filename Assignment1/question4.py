@@ -1,7 +1,7 @@
-import numpy as np
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
+import sys
 
 def diagnoseDAT(Xtest, data_dir):
     """
@@ -31,9 +31,9 @@ def diagnoseDAT(Xtest, data_dir):
     X_train_scaled = scaler.fit_transform(X_train)
     Xtest_scaled = scaler.transform(Xtest)
 
-    # Best k and distance metric based on previous results
-    best_k = 5  # Update with the best k found in Q3
-    best_metric = "euclidean"  # Change to "manhattan" if that performed better
+    # Best k and distance metric based on file best_KNN_find.py
+    best_k = 16
+    best_metric = "infinity" # Can also use 'chebyshev' with the same k value
 
     # Train the best kNN classifier with weighting
     knn = KNeighborsClassifier(n_neighbors=best_k, metric=best_metric, weights="distance")
@@ -44,9 +44,13 @@ def diagnoseDAT(Xtest, data_dir):
 
     return ytest
 
-# Example usage
-if __name__ == "__main__":
-    Xtest = pd.read_csv("datasets/test.sDAT.csv", header=None).values  # Example test file
-    data_directory = "datasets"
+def main():
+    data_directory = sys.argv[1] # Directory for the whole datasets
+    Xtest_file = sys.argv[2] # For us, the second argument is the file to be used as Xtest data
+    Xtest = pd.read_csv(Xtest_file, header=None).values
     predictions = diagnoseDAT(Xtest, data_directory)
     print("Predictions:", predictions)
+
+
+if __name__ == '__main__':
+    main()
