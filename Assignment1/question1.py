@@ -56,7 +56,3 @@ for k_value in k_values_to_test:
     plt.title("Testing KNN with k = " + str(k_value) + ", Test Error: " + str(round((1 - accuracy)* 100)) + "%")
     plt.legend()
     plt.show()
-
-# points = pd.read_csv("datasets/2D_grid_points.sNC.csv", header=None)
-# plt.scatter(points[0], points[1])
-# plt.show()
