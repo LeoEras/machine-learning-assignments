@@ -25,7 +25,7 @@ Additional Files:
 
 ## Assignment's question answers
 
-Note: *For all of this to work properly, 'datasets' folder **should be accessible** (in the same directory) as the python files.*
+**Note:** *For all of this to work properly, 'datasets' folder **should be accessible** (in the same directory) as the python files.*
 
 To run each of the answers (1 - 3), just call:
 ```
