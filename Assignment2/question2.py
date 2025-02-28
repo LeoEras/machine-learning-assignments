@@ -31,8 +31,8 @@ best_alpha = ridge_grid.best_params_["alpha"]
 rmse_values = np.sqrt(-ridge_grid.cv_results_['mean_test_score']) # For graphics purposes
 
 ridge_model = Ridge(alpha=best_alpha)
-ridge_grid.fit(x_dataset, y_labels)
-y_pred = ridge_grid.predict(x_test)
+ridge_model.fit(x_dataset, y_labels)
+y_pred = ridge_model.predict(x_test)
 
 print("Ridge results")
 print(f"Residual Standard Error (RSE): {np.sqrt(mean_squared_error(y_test, y_pred)):.2f}")
