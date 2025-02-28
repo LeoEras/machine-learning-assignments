@@ -29,7 +29,6 @@ print(f"Residual Standard Error (RSE): {np.sqrt(mean_squared_error(y_test, y_pre
 print(f"R-squared (R2): {r2_score(y_test, y_pred):.2f}")
 
 # Using cross-validation (k = 5, then k = 10)
-# k = 10 should perform worse as K is large (compared to k = 5)
 k_values = [5, 10]
 for k_val in k_values:
     print("\nUSING THE CROSS VALIDATION APPROACH, K = " + str(k_val))
