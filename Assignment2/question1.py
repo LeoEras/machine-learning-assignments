@@ -7,7 +7,6 @@ from sklearn.model_selection import KFold, cross_val_score
 
 # Reading the data
 train_df = pd.read_csv("datasets/train.csv")
-test_df = pd.read_csv("datasets/test.csv")
 
 x_dataset = train_df[train_df.columns.drop("ConcreteCompressiveStrength_MPa_Megapascals_")]
 y_labels = train_df[["ConcreteCompressiveStrength_MPa_Megapascals_"]]
