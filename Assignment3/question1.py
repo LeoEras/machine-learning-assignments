@@ -6,39 +6,9 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 )
-from features_helper import read_features
+from utils import load_data
 
-FEATURES = read_features('datasets/fdg_pet.feature.info.txt')
 C_SEARCH = np.arange(0.001, 1, 0.001) # Always centers between 0 and 1
-
-# Step 1: Load and Prepare Data (Fix Column Header Issue)
-def load_data():
-
-    # Load training data (ensuring first row is not treated as column names)
-    train_nc = pd.read_csv("datasets/train.fdg_pet.sNC.csv", header=None, names=FEATURES)
-    train_dat = pd.read_csv("datasets/train.fdg_pet.sDAT.csv", header=None, names=FEATURES)
-
-    # Load test data (ensuring first row is not treated as column names)
-    test_nc = pd.read_csv("datasets/test.fdg_pet.sNC.csv", header=None, names=FEATURES)
-    test_dat = pd.read_csv("datasets/test.fdg_pet.sDAT.csv", header=None, names=FEATURES)
-
-    # Assign labels (0 = sNC, 1 = sDAT)
-    train_nc["label"] = 0
-    train_dat["label"] = 1
-    test_nc["label"] = 0
-    test_dat["label"] = 1
-
-    # Merge train and test data
-    train_data = pd.concat([train_nc, train_dat], ignore_index=True)
-    test_data = pd.concat([test_nc, test_dat], ignore_index=True)
-
-    # Separate features and labels
-    X_train = train_data.drop(columns=["label"])
-    y_train = train_data["label"]
-    X_test = test_data.drop(columns=["label"])
-    y_test = test_data["label"]
-
-    return X_train, y_train, X_test, y_test
 
 # Step 2: Perform Grid Search to Find Best 'C'
 def train_linear_svm(X_train, y_train):
@@ -106,6 +76,7 @@ def plot_performance(cv_results):
 
 if __name__ == "__main__":  
     # Load data
+    print("This takes about 20 seconds")
     X_train, y_train, X_test, y_test = load_data()
 
     # Find best 'C' using Grid Search
@@ -119,5 +90,3 @@ if __name__ == "__main__":
 
     # Plot performance of different C values
     plot_performance(cv_results)
-
-    print("\nAll steps completed successfully!")
