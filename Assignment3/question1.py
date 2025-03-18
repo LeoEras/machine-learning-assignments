@@ -10,9 +10,7 @@ from utils import load_data
 
 C_SEARCH = np.arange(0.001, 1, 0.001) # Always centers between 0 and 1
 
-# Step 2: Perform Grid Search to Find Best 'C'
 def train_linear_svm(X_train, y_train):
-    
     param_grid = {"C": C_SEARCH}
     svm = SVC(kernel="linear")
 
@@ -25,7 +23,6 @@ def train_linear_svm(X_train, y_train):
 
     return best_C, grid_search.cv_results_
 
-# Step 3: Train Final Model with Best 'C'
 def train_final_model(X_train, y_train, best_C):
     print("\nTraining final SVM model with best C value...")
     final_svm = SVC(kernel="linear", C=best_C)
@@ -33,7 +30,6 @@ def train_final_model(X_train, y_train, best_C):
     print("Final model training complete!")
     return final_svm
 
-# Step 4: Evaluate Model Performance
 def evaluate_model(model, X_test, y_test):
     print("\nEvaluating model performance...")
     y_pred = model.predict(X_test)
@@ -60,7 +56,6 @@ def evaluate_model(model, X_test, y_test):
 
     return accuracy, precision, recall, specificity, balanced_accuracy
 
-# Step 5: Plot Model Performance for Different 'C' Values
 def plot_performance(cv_results):
     mean_scores = cv_results["mean_test_score"]
 

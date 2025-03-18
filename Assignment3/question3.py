@@ -8,10 +8,9 @@ from sklearn.metrics import (
 )
 from utils import load_data
 
-C_SEARCH = np.logspace(-3, 3, 5) # Always centers somewhere around 4
+C_SEARCH = np.logspace(-3, 3, 5)
 GAMMA_SEARCH = np.logspace(-3, 3, 5)
 
-# Step 2: Perform Grid Search to Find Best '(C, γ)'
 def train_rbf_svm(X_train, y_train):
     print("\nTraining RBF SVM using Grid Search...")
 
@@ -31,7 +30,6 @@ def train_rbf_svm(X_train, y_train):
 
     return best_C, best_gamma, grid_search.cv_results_
 
-# Step 3: Train Final Model with Best '(C, γ)'
 def train_final_model(X_train, y_train, best_C, best_gamma):
     print("\nTraining final RBF SVM model with best parameters...")
     final_svm = SVC(kernel="rbf", C=best_C, gamma=best_gamma)
@@ -39,7 +37,6 @@ def train_final_model(X_train, y_train, best_C, best_gamma):
     print("Final model training complete!")
     return final_svm
 
-# Step 4: Evaluate Model Performance
 def evaluate_model(model, X_test, y_test):
     print("\nEvaluating model performance...")
     y_pred = model.predict(X_test)
@@ -66,7 +63,6 @@ def evaluate_model(model, X_test, y_test):
 
     return accuracy, precision, recall, specificity, balanced_accuracy
 
-# Step 5: Plot Model Performance for Different '(C, γ)' Values
 def plot_C_performance(cv_results):
     mean_scores = cv_results["mean_test_score"].reshape(len(C_SEARCH), len(GAMMA_SEARCH))
 

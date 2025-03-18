@@ -6,12 +6,10 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 )
-from utils import read_features, load_data
+from utils import load_data
 
-# List of 14 brain region features
 C_SEARCH = np.arange(3, 5, 0.1) # Always centers somewhere around 4
 
-# Step 2: Perform Grid Search to Find Best '(C, d)'
 def train_polynomial_svm(X_train, y_train, use_subset=False):
     print("\nTraining Polynomial SVM using Grid Search...")
 
@@ -37,7 +35,6 @@ def train_polynomial_svm(X_train, y_train, use_subset=False):
 
     return best_C, best_degree, grid_search.cv_results_
 
-# Step 3: Train Final Model with Best '(C, d)'
 def train_final_model(X_train, y_train, best_C, best_degree):
     print("\nTraining final Polynomial SVM model with best parameters...")
     final_svm = SVC(kernel="poly", C=best_C, degree=best_degree)
@@ -45,7 +42,6 @@ def train_final_model(X_train, y_train, best_C, best_degree):
     print("Final model training complete!")
     return final_svm
 
-# Step 4: Evaluate Model Performance
 def evaluate_model(model, X_test, y_test):
     print("\nEvaluating model performance...")
     y_pred = model.predict(X_test)
@@ -72,9 +68,7 @@ def evaluate_model(model, X_test, y_test):
 
     return accuracy, precision, recall, specificity, balanced_accuracy
 
-# Step 5: Plot Model Performance for Different '(C, d)' Values
 def plot_C_performance(cv_results):
-    # C_values = np.logspace(-3, 3, 5)
     degrees = [2, 3, 4]
 
     mean_scores = cv_results["mean_test_score"].reshape(len(C_SEARCH), len(degrees))
