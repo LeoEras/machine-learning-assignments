@@ -3,7 +3,7 @@ import sys
 from sklearn.svm import SVC
 
 def train_final_model(X_train, y_train):
-    final_svm = SVC(kernel="rbf", C=4.2, gamma=3)
+    final_svm = SVC(kernel="poly", C=4.2, degree=3)
     final_svm.fit(X_train, y_train)
     return final_svm
 
