@@ -1,3 +1,4 @@
 env
 Assignment*/datasets/*.csv
 Assignment*/__pycache__/
+Assignment*/*.png
