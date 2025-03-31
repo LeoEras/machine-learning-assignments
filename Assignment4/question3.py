@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 # Train Decision Tree with Grid Search
 def train_random_forest(X_train, y_train):
-    print("Running Grid Search on Decision Tree criteria...")
+    print("Running Grid Search on Random Forest criteria...")
     param_grid = {"criterion": ["gini", "entropy", "log_loss"]}
     # A convention, using the number 42
     tree = RandomForestClassifier(random_state=42) # Answer to the Ultimate Question of Life, the Universe, and Everything.
