@@ -12,7 +12,8 @@ warnings.filterwarnings("ignore")
 def train_decision_tree(X_train, y_train):
     print("Running Grid Search on Decision Tree criteria...")
     param_grid = {"criterion": ["gini", "entropy", "log_loss"]}
-    tree = DecisionTreeClassifier(random_state=42)
+    # A convention, using the number 42
+    tree = DecisionTreeClassifier(random_state=42) # Answer to the Ultimate Question of Life, the Universe, and Everything.
     grid_search = GridSearchCV(tree, param_grid, cv=5, scoring="accuracy")
     grid_search.fit(X_train, y_train)
     best_criterion = grid_search.best_params_["criterion"]
