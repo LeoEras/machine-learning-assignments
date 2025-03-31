@@ -1,9 +1,6 @@
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
-import warnings
 from utils import load_data, evaluate_model
-
-warnings.filterwarnings("ignore")
 
 # Train Decision Tree with Grid Search
 def train_decision_tree(X_train, y_train):
