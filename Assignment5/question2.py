@@ -2,7 +2,6 @@ from question1 import data_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from utils import convert_img_to_arr, evaluate_model
-import numpy as np
 
 def best_KNN(X_train, y_train):
     k_values_to_test = [i for i in range(1, 5)] # Takes too much time, the answer is 3
