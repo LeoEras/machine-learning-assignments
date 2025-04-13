@@ -3,6 +3,11 @@ from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 )
 
+def convert_img_to_arr(dataset_imgs):
+    arr_form = []
+    for item in dataset_imgs:
+        arr_form.append(item.flatten(order='F')) # Column-major (Fortran-style) order. Elements are read in column-by-column
+    return arr_form
 
 
 # Evaluate model
