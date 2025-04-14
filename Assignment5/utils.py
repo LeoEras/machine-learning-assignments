@@ -10,6 +10,8 @@ def data_split():
     train_data = np.load(DATASETS[0])
     test_labels = np.load(DATASETS[1])
     print(f"Number of data items: {len(train_data)}")
+
+    train_data = np.array(flatten(train_data))
     X_train, X_test, y_train, y_test = train_test_split(
         train_data, test_labels, test_size=.1, random_state=0, stratify=test_labels
     )
@@ -18,7 +20,7 @@ def data_split():
     print("Stratify option in \'train_test_split\' function helps with a balanced outcome with the split")
     return X_train, X_test, y_train, y_test
 
-def img_to_arr(dataset_imgs):
+def flatten(dataset_imgs):
     arr_form = []
     for item in dataset_imgs:
         arr_form.append(item.flatten(order='F')) # Column-major (Fortran-style) order. Elements are read in column-by-column
