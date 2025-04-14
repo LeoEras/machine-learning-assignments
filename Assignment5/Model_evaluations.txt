@@ -26,4 +26,4 @@ F1 Score: 0.9697
 
 TORCH
 --------
-Test Accuracy: 96.63%
+Test Accuracy: 96.35%

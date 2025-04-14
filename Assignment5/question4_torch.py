@@ -2,27 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
-from utils import img_to_arr
-import numpy as np
-from sklearn.model_selection import train_test_split
-# -------------------------
-# 1. Load and split data
-# -------------------------
-
-DATASETS = ["datasets/mnist_train_data.npy", "datasets/mnist_train_labels.npy"]
-
-def data_split():
-    train_data = np.load(DATASETS[0]) / 255.0
-    train_labels = np.load(DATASETS[1])
-
-    # Convert to column-major flattened arrays
-    train_data = np.array(img_to_arr(train_data))
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        train_data, train_labels, test_size=0.1, random_state=0, stratify=train_labels
-    )
-    return X_train, X_test, y_train, y_test
-
+from utils import data_split
 
 class NumpyMNISTDataset(Dataset):
     def __init__(self, data, labels):
@@ -36,9 +16,6 @@ class NumpyMNISTDataset(Dataset):
         return self.data[idx], self.labels[idx]
 
 
-# -------------------------
-# 2. Define the model
-# -------------------------
 class MLPClassifierTorch(nn.Module):
     def __init__(self):
         super(MLPClassifierTorch, self).__init__()
@@ -60,10 +37,6 @@ class MLPClassifierTorch(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-
-# -------------------------
-# 3. Training function
-# -------------------------
 def train(model, device, train_loader, optimizer, criterion, epoch):
     model.train()
     total_loss = 0
@@ -88,10 +61,6 @@ def train(model, device, train_loader, optimizer, criterion, epoch):
     acc = correct / total * 100
     print(f"Epoch {epoch}: Loss = {total_loss:.4f}, Accuracy = {acc:.2f}%")
 
-
-# -------------------------
-# 4. Evaluation function
-# -------------------------
 def test(model, device, test_loader):
     model.eval()
     correct = 0
@@ -107,10 +76,6 @@ def test(model, device, test_loader):
 
     print(f"Test Accuracy: {correct / total * 100:.2f}%")
 
-
-# -------------------------
-# 5. Main function
-# -------------------------
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", device)
