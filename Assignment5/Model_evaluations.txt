@@ -1,0 +1,29 @@
+---------Evaluating KNN model-------------
+Accuracy: 0.9732
+Precision: 0.9732
+Recall (Sensitivity): 0.9732
+F1 Score: 0.9732
+
+---------Evaluating SMV-Polynomial model-------------
+Accuracy: 0.9830
+Precision: 0.9830
+Recall (Sensitivity): 0.9830
+F1 Score: 0.9830
+
+with layer structure (72, 62, 62, 72, 23, 60, 36, 61, 54, 98, 41, 33, 62, 71, 53, 11)
+---------Evaluating MLP model-------------
+Accuracy: 0.9753
+Precision: 0.9753
+Recall (Sensitivity): 0.9753
+F1 Score: 0.9753
+
+With layer structure (88, 59, 18, 92, 57)
+---------Evaluating MLP model-------------
+Accuracy: 0.9697
+Precision: 0.9697
+Recall (Sensitivity): 0.9697
+F1 Score: 0.9697
+
+TORCH
+--------
+Test Accuracy: 96.63%
