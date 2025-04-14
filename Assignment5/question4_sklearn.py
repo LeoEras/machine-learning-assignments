@@ -3,8 +3,6 @@ from sklearn.model_selection import GridSearchCV
 from utils import data_split, img_to_arr, evaluate_model
 from sklearn.model_selection import train_test_split
 import numpy as np
-import torch.nn as nn
-import torch
 
 # This generates the layers
 def generate_random_layer_configs(n_configs=5, max_layers=10, min_neurons=10, max_neurons=100):
@@ -48,27 +46,6 @@ def train_final_model(X_train, y_train, hidden_layer_sizes):
     print("Final model training complete!")
     return model
 
-class MLPClassifierTorch(nn.Module):
-    def __init__(self, input_size, output_size, hidden_layer_sizes):
-        super(MLPClassifierTorch, self).__init__()
-
-        layers = []
-
-        layer_sizes = [input_size] + list(hidden_layer_sizes) + [output_size]
-
-        for in_size, out_size in zip(layer_sizes[:-2], layer_sizes[1:-1]):
-            layers.append(nn.Linear(in_size, out_size))
-            layers.append(nn.ReLU())
-
-        # Final layer (no activation — assume you're using CrossEntropyLoss which includes softmax)
-        layers.append(nn.Linear(layer_sizes[-2], layer_sizes[-1]))
-
-        self.model = nn.Sequential(*layers)
-
-    def forward(self, x):
-        return self.model(x)
-    
-
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = data_split()
     X_train_arr = img_to_arr(X_train)
@@ -77,7 +54,3 @@ if __name__ == "__main__":
     hidden_layer_sizes = (72, 62, 62, 72, 23, 60, 36, 61, 54, 98, 41, 33, 62, 71, 53, 11) # After 45 mins training
     model = train_final_model(X_train_arr, y_train, hidden_layer_sizes=hidden_layer_sizes)
     evaluate_model(model, X_test_arr, y_test, "MLP", "micro")
-
-    # The model but as a Torch one to be saved
-    model = MLPClassifierTorch(784, 10, hidden_layer_sizes) # 784=28x28, 10 (0-9)
-    torch.save(model.state_dict(), "model.pth")
